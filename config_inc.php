@@ -6,7 +6,7 @@
 	$g_db_password = 'eb0f293e';
 
 # --- Email Configuration ---
-$g_phpMailer_method		= PHPMAILER_METHOD_SMTP; # or PHPMAILER_METHOD_MAIL, PHPMAILER_METHOD_SENDMAIL
+$g_phpMailer_method		= PHPMAILER_METHOD_SMTP; # or PHPMAILER_METHOD_MAIL, PHPMAILER_METHOD_SENDMAIL, changeg on 3/14/2014
 $g_smtp_host			= 'smtp.sendgrid.net';			# used with PHPMAILER_METHOD_SMTP
 $g_smtp_username		= 'azure_71fee2a02b1467ba6c036d6994032e85@azure.com';					# used with PHPMAILER_METHOD_SMTP
 $g_smtp_password		= 'hma6ay0v';					# used with PHPMAILER_METHOD_SMTP
