@@ -1,15 +1,15 @@
 <?php
-	$g_hostname = 'us-cdbr-azure-west-b.cleardb.com';
+	$g_hostname = '';
 	$g_db_type = 'mysql';
-	$g_database_name = 'as_31987ead5571ba2';
-	$g_db_username = 'bc5dce6c699515';
-	$g_db_password = 'eb0f293e';
+	$g_database_name = '';
+	$g_db_username = '';
+	$g_db_password = '';
 
 # --- Email Configuration ---
 $g_phpMailer_method		= PHPMAILER_METHOD_SMTP; # or PHPMAILER_METHOD_MAIL, PHPMAILER_METHOD_SENDMAIL, changeg on 3/14/2014
-$g_smtp_host			= 'smtp.sendgrid.net';			# used with PHPMAILER_METHOD_SMTP
-$g_smtp_username		= 'azure_71fee2a02b1467ba6c036d6994032e85@azure.com';					# used with PHPMAILER_METHOD_SMTP
-$g_smtp_password		= 'hma6ay0v';					# used with PHPMAILER_METHOD_SMTP
+$g_smtp_host			= '';			# used with PHPMAILER_METHOD_SMTP
+$g_smtp_username		= '';					# used with PHPMAILER_METHOD_SMTP
+$g_smtp_password		= '';					# used with PHPMAILER_METHOD_SMTP
 $g_administrator_email  = 'leo@goconcierge.net';
 $g_webmaster_email      = 'leo@goconcierge.net';
 $g_from_email           = 'mantis@goconcierge.net';	# the "From: " field in emails
