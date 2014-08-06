@@ -17,5 +17,5 @@ $g_return_path_email    = 'leo@goconcierge.net';	# the return address for bounce
 # $g_from_name			= 'Mantis Bug Tracker';
 # $g_email_receive_own	= OFF;
 # $g_email_send_using_cronjob = OFF;
-
+$g_show_version         = ON;
 ?>
