@@ -17,7 +17,7 @@
 /**
  * @package MantisBT
  * @copyright Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * @copyright Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ * @copyright Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
  * @link http://www.mantisbt.org
  */
 
@@ -66,13 +66,6 @@ function print_test( $p_test_description, $p_result, $p_hard_fail = true, $p_mes
 	echo "\n<tr><td bgcolor=\"#ffffff\">$p_test_description</td>";
 	print_test_result( $p_result, $p_hard_fail, $p_message );
 	echo "</tr>\n";
-}
-
-# --------
-# create an SQLArray to insert data
-function InsertData( $p_table, $p_data ) {
-	$query = "INSERT INTO " . $p_table . $p_data;
-	return Array( $query );
 }
 
 # install_state
@@ -974,7 +967,7 @@ if( 7 == $t_install_state ) {
 <p><a href="../login_page.php">Continue</a> to log into Mantis</p>
 <?php
 	} else {?>
-<p>Please log in as the administrator and <a href="../manage_proj_create_page.php">create</a> your first project.
+<p>Please log in as the administrator and <a href="../login_page.php">create</a> your first project.
 
 <?php
 	}

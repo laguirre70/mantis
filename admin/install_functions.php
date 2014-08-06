@@ -19,7 +19,7 @@
  * All functions must be name install_<function_name> and referenced as just <function_name>.
  * @package MantisBT
  * @copyright Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * @copyright Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ * @copyright Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
  * @link http://www.mantisbt.org
  */
 
@@ -256,3 +256,11 @@ function install_correct_multiselect_custom_fields_db_format() {
 	# Return 2 because that's what ADOdb/DataDict does when things happen properly
 	return 2;
 }
+
+# --------
+# create an SQLArray to insert data
+function InsertData( $p_table, $p_data ) {
+	$query = "INSERT INTO " . $p_table . $p_data;
+	return Array( $query );
+}
+

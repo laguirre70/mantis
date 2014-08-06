@@ -20,13 +20,13 @@
  * @package CoreAPI
  * @subpackage URLAPI
  * @copyright Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * @copyright Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ * @copyright Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
  * @link http://www.mantisbt.org
  */
 
 /**
  * Retrieve the contents of a remote URL.
- * First tries using built-in PHP modules (OpenSSL and cURL), then attempts 
+ * First tries using built-in PHP modules (OpenSSL and cURL), then attempts
  * system call as last resort.
  * @param string URL
  * @return null|string URL contents (NULL in case of errors)
@@ -47,11 +47,23 @@ function url_get( $p_url ) {
 	# Use the PHP cURL extension
 	if( function_exists( 'curl_init' ) ) {
 		$t_curl = curl_init( $p_url );
-		curl_setopt( $t_curl, CURLOPT_RETURNTRANSFER, true );
-		# @todo It may be useful to provide users a way to define additional 
+
+		# cURL options
+		$t_curl_opt[CURLOPT_RETURNTRANSFER] = true;
+
+		# @todo It may be useful to provide users a way to define additional
 		# custom options for curl module, e.g. proxy settings and authentication.
 		# This could be stored in a global config option.
 
+		# Default User Agent (Mantis version + php curl extension version)
+		$t_vers = curl_version();
+		$t_curl_opt[CURLOPT_USERAGENT] =
+			'mantisbt/' . MANTIS_VERSION . ' php-curl/' . $t_vers['version'];
+
+		# Set the options
+		curl_setopt_array( $t_curl, $t_curl_opt );
+
+		# Retrieve data
 		$t_data = curl_exec( $t_curl );
 		curl_close( $t_curl );
 

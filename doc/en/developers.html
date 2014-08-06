@@ -31,7 +31,7 @@ NAME="INDEX"
 ></H1
 ><P
 CLASS="COPYRIGHT"
->Copyright &copy; 2013 The MantisBT Team</P
+>Copyright &copy; 2014 The MantisBT Team</P
 ><DIV
 CLASS="LEGALNOTICE"
 ><P
@@ -81,6 +81,30 @@ HREF="#DEV.CONTRIB.SETUP"
 HREF="#DEV.CONTRIB.CLONE"
 >Cloning the Repository</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#DEV.CONTRIB.CLONE.DEV"
+>Determining the Clone URL</A
+></DT
+><DT
+><A
+HREF="#DEV.CONTRIB.CLONE.CLONE"
+>Initializing the Clone</A
+></DT
+><DT
+><A
+HREF="#DEV.CONTRIB.CLONE.REMOTES"
+>Adding remotes</A
+></DT
+><DT
+><A
+HREF="#DEV.CONTRIB.CLONE.BRANCHES"
+>Checking out branches</A
+></DT
+></DL
+></DD
 ><DT
 ><A
 HREF="#DEV.CONTRIB.BRANCH"
@@ -147,6 +171,11 @@ HREF="#DEV.DATABASE"
 ></DT
 ><DD
 ><DL
+><DT
+><A
+HREF="#DEV.DATABASE.ERD"
+>The MantisBT schema</A
+></DT
 ><DT
 ><A
 HREF="#DEV.DATABASE.SCHEMA"
@@ -466,7 +495,7 @@ NAME="DEV.CONTRIB"
 >Contributing to MantisBT</H1
 ><P
 >		MantisBT uses the source control tool <A
-HREF="http://git.or.cz"
+HREF="http://git-scm.com/"
 TARGET="_top"
 >Git</A
 >
@@ -526,57 +555,374 @@ NAME="DEV.CONTRIB.CLONE"
 >Cloning the Repository</A
 ></H2
 ><P
->			The primary repository for MantisBT is hosted and available in multiple
-			methods depending on user status and intentions.  For most contributers,
-			the public clone URL is
+>			The official MantisBT source code repository is hosted at
 			<A
+HREF="https://github.com/mantisbt/mantisbt"
+TARGET="_top"
+>GitHub</A
+>.
+
+			This document assumes that you have already signed up for and
+			setup a GitHub account.
+		</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="DEV.CONTRIB.CLONE.DEV"
+>Determining the Clone URL</A
+></H3
+><P
+>				Which URL you will use to clone the repository before you
+				start developing depends on your situation.
+			</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>MantisBT Core Team Developers</DT
+><DD
+><P
+>							MantisBT developers have <I
+CLASS="EMPHASIS"
+>push</I
+> access to the
+							official repository.
+						</P
+><P
+>							Benefitting from this access requires a special URL
+							that uses your SSH key to handle access permissions:
+							<A
+HREF="git@github.com:mantisbt/mantisbt.git"
+TARGET="_top"
+>git@github.com:mantisbt/mantisbt.git</A
+>.
+							Alternatively, an HTTPS link can be used as well,
+							in which case you will have to provide your GitHub
+							User ID and password when Git requests it:
+							<A
+HREF="https://github.com/mantisbt/mantisbt.git"
+TARGET="_top"
+>https://github.com/mantisbt/mantisbt.git</A
+>.
+						</P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="90%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>							Pushes <I
+CLASS="EMPHASIS"
+>will fail</I
+> if you
+							do not have push access or your public SSH key
+							is not set up correctly in your GitHub profile.
+						</P
+></TD
+></TR
+></TABLE
+></DIV
+></DD
+><DT
+>Contributors</DT
+><DD
+><P
+>							For other people, the MantisBT repository and
+							the related clone URLs
+							<A
 HREF="git://github.com/mantisbt/mantisbt.git"
 TARGET="_top"
 >git://github.com/mantisbt/mantisbt.git</A
->.
-			To clone the repository, perform the following from your target workspace:
-		</P
-><PRE
-CLASS="PROGRAMLISTING"
->$ git clone git://github.com/mantisbt/mantisbt.git
-		</PRE
+> (SSH)
+							or
+							<A
+HREF="https://github.com/mantisbt/mantisbt.git"
+TARGET="_top"
+>https://github.com/mantisbt/mantisbt.git</A
+> (HTTPS)
+							will always be read-only.
+						</P
 ><P
->			If you are a member of the MantisBT development team with write access to
-			the repository, there is a special clone URL that uses your SSH key to
-			handle access permissions and allow you read and write access.  Note: This
-			action <I
+>							It is therefore strongly advised to <I
 CLASS="EMPHASIS"
->will fail</I
-> if you do not have developer access
-			or do not have your public SSH key set up correctly.
-		</P
-><PRE
-CLASS="PROGRAMLISTING"
->$ git clone git@github.com:mantisbt/mantisbt.git
-		</PRE
+>							<A
+HREF="https://github.com/mantisbt/mantisbt/fork"
+TARGET="_top"
+>								create your own fork
+							</A
+>
+							</I
+> of MantisBT where you will be able
+							to push your changes, and then use the fork's URL
+							instead to clone, which will look like this:
+							<A
+HREF="git@github.com:YourGitHubID/mantisbt.git"
+TARGET="_top"
+>git@github.com:YourGitHubID/mantisbt.git</A
+>
+							or
+							<A
+HREF="https://github.com/YourGitHubID/mantisbt.git"
+TARGET="_top"
+>https://github.com/YourGitHubID/mantisbt.git</A
+>
+						</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="DEV.CONTRIB.CLONE.CLONE"
+>Initializing the Clone</A
+></H3
 ><P
->			After performing the cloning operation, you should end up with a new
-			directory in your workspace, <TT
+>				To clone the repository, execute the following command
+				from your target workspace:
+<PRE
+CLASS="PROGRAMLISTING"
+>git clone YourCloneURL</PRE
+>
+				After performing the cloning operation, you should end up with a new
+				directory in your workspace, <TT
 CLASS="FILENAME"
 >mantisbt/</TT
->.  By default,
-			it will only track code from the primary remote branch, <CODE
+>,
+				containing the MantisBT repository with a <CODE
+CLASS="LITERAL"
+>remote</CODE
+>
+				named <I
+CLASS="EMPHASIS"
+>origin</I
+> pointing to your Clone URL.
+			</P
+><P
+>				MantisBT uses <A
+HREF="http://git-scm.com/book/en/Git-Tools-Submodules"
+TARGET="_top"
+>Git submodules</A
+>
+				to store and manage some third-party libraries.
+				These require additional steps to initialize properly:
+<PRE
+CLASS="PROGRAMLISTING"
+>cd mantisbt
+git submodule update --init</PRE
+>
+			</P
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="images/warning.gif"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>				Failure to execute the submodule initialization commands
+				will result in the corresponding directories under
+				<TT
+CLASS="FILENAME"
+>/library</TT
+> being empty, which will then
+				cause errors when running MantisBT.
+			</P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="DEV.CONTRIB.CLONE.REMOTES"
+>Adding remotes</A
+></H3
+><P
+>				If you are planning to use your own fork to push and
+				maintain your changes, then we recommend setting up an
+				<I
+CLASS="EMPHASIS"
+>upstream</I
+> <CODE
+CLASS="LITERAL"
+>remote</CODE
+>
+				for MantisBT's official repository, which will make it easier
+				to keep your repository up-to-date.
+<PRE
+CLASS="PROGRAMLISTING"
+>git remote add --tags upstream git://github.com/mantisbt/mantisbt.git</PRE
+>
+			</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="DEV.CONTRIB.CLONE.BRANCHES"
+>Checking out branches</A
+></H3
+><P
+>				By default, the new clone will only track code from
+				the primary remote branch, <CODE
 CLASS="LITERAL"
 >master</CODE
 >,
-			which is the latest development version of MantisBT.  For contributers
-			planning to work with stable release branches, or other development
-			branches, you will need to set up local tracking branches in your
-			repository.  The following commands will set up a tracking branch for the
-			current stable branch, <CODE
+				which is the latest development version of MantisBT.
+				If you are planning to work with stable release or
+				other development branches, you will need to set up
+				local tracking branches in your repository.
+			</P
+><P
+>				The following command will set up a tracking branch for the
+				current stable branch, <CODE
 CLASS="LITERAL"
 >master-1.2.x</CODE
 >.
-		</P
+<PRE
+CLASS="PROGRAMLISTING"
+>git checkout -b master-1.2.x origin/master-1.2.x</PRE
+>
+			</P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>					With the introduction of submodules for some of the
+					third-party libraries, you may encounter
+					issues when switching to an older branch which
+					still has code from those libraries in a subdirectory
+					of <TT
+CLASS="FILENAME"
+>/library</TT
+> rather than a submodule:
+				</P
+><P
 ><PRE
 CLASS="PROGRAMLISTING"
->$ git checkout -b master-1.2.x origin/master-1.2.x
-		</PRE
+>$ git checkout old_branch
+error: The following untracked working tree files would be overwritten by checkout
+	(list of files)
+Aborting</PRE
+>
+				</P
+><P
+>					To resolve this, you first have to get rid of the
+					submodules directories before you can checkout the branch.
+					The command below will move all submodules to
+					<TT
+CLASS="FILENAME"
+>/tmp</TT
+>:
+<PRE
+CLASS="PROGRAMLISTING"
+>sed -rn "s/^.*path\s*=\s*(.*)$/\1/p" .gitmodules |xargs -I{} mv -v {} /tmp
+git checkout old_branch</PRE
+>
+				</P
+><P
+>					When switching back from the older branch, the submodules
+					directories will be empty.
+					At that point you can either
+					<P
+></P
+><UL
+><LI
+><P
+>								Update the submodules to reclone them
+<PRE
+CLASS="PROGRAMLISTING"
+>git submodule update</PRE
+>
+							</P
+></LI
+><LI
+><P
+>								Restore the directories previously moved
+								to <TT
+CLASS="FILENAME"
+>/tmp</TT
+> back into
+								the empty directories, e.g.
+<PRE
+CLASS="PROGRAMLISTING"
+>sed -rn "s/^.*path\s*=\s*(.*)$/\1/p" .gitmodules |xargs -n 1 basename |xargs -I{} mv -v /tmp/{} library</PRE
+>
+							</P
+></LI
+></UL
+>
+				</P
+><P
+>					For further reference:
+					<A
+HREF="http://git-scm.com/book/en/Git-Tools-Submodules#Issues-with-Submodules"
+TARGET="_top"
+>						Pro Git book
+					</A
+>
+				</P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="SECT1"
@@ -587,41 +933,81 @@ NAME="DEV.CONTRIB.BRANCH"
 >Maintaining Tracking Branches</A
 ></H2
 ><P
->			In order to keep your local repository up to date with the official,
-			there are a few simple commands needed for any tracking branches that you
-			may have, including <CODE
+>			In order to keep your local repository up-to-date with the
+			official one, there are a few simple commands needed for any
+			tracking branches that you may have, including
+			<CODE
 CLASS="LITERAL"
 >master</CODE
-> and
-			<CODE
+> and <CODE
 CLASS="LITERAL"
 >master-1.2.x</CODE
 >.
 		</P
 ><P
->			First, you'll need to got the latest information from the remote repo:
-		</P
-><PRE
+>			First, you'll need to get the latest information from the remote repo:
+<PRE
 CLASS="PROGRAMLISTING"
->$ git fetch origin
-		</PRE
+>git fetch origin</PRE
+>
+		</P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>			If you cloned from your personal GitHub fork instead of
+			the official MantisBT repository as explained in
+			<A
+HREF="#DEV.CONTRIB.CLONE.REMOTES"
+>the Section called <I
+>Adding remotes</I
+></A
+>&#62;,
+			then you should instead execute:
+<PRE
+CLASS="PROGRAMLISTING"
+>git fetch upstream</PRE
+>
+		</P
+></TD
+></TR
+></TABLE
+></DIV
 ><P
 >			Then for each tracking branch you have, enter the following commands:
-		</P
-><PRE
+<PRE
 CLASS="PROGRAMLISTING"
->$ git checkout master
-$ git rebase origin/master
-		</PRE
+>git checkout BranchName
+git rebase</PRE
+>
+		</P
 ><P
->			Alternatively, you may combine the above steps into a single command
-			for each remote tracking branch:
-		</P
-><PRE
+>			Alternatively, you may combine the fetch and rebase operations
+			described above into a single pull command
+			(for each remote tracking branch):
+<PRE
 CLASS="PROGRAMLISTING"
->$ git checkout master
-$ git pull --rebase
-		</PRE
+>git checkout master
+git pull --rebase</PRE
+>
+		</P
 ></DIV
 ><DIV
 CLASS="SECT1"
@@ -759,7 +1145,7 @@ CLASS="LITERAL"
 HREF="http://www.phpunit.de"
 TARGET="_top"
 >PHPUnit 3.4 or newer</A
-> and 
+> and
 			<A
 HREF="http://phing.info"
 TARGET="_top"
@@ -768,15 +1154,15 @@ TARGET="_top"
 			The tests are configured using a <CODE
 CLASS="LITERAL"
 >bootstrap.php</CODE
-> file. The 
+> file. The
 			<CODE
 CLASS="LITERAL"
 >boostrap.php.sample</CODE
 > file contains the settings you will
-			need to adjust to run all the tests. 
+			need to adjust to run all the tests.
 		</P
 ><P
->			Running the unit tests is done from root directory using the following 
+>			Running the unit tests is done from root directory using the following
 			command:
 		</P
 ><PRE
@@ -808,7 +1194,7 @@ NAME="DEV.CONTRIB.TEST.SOAP"
 >Adjust the <CODE
 CLASS="LITERAL"
 >bootstrap.php</CODE
-> file 
+> file
 				to point to your local installation.</P
 ></LI
 ><LI
@@ -1024,6 +1410,44 @@ NAME="DEV.DATABASE"
 ><DIV
 CLASS="SECT1"
 ><H2
+CLASS="SECT1"
+><A
+NAME="DEV.DATABASE.ERD"
+>The MantisBT schema</A
+></H2
+><P
+>The MantisBT database schema (excluding plugins) is described in
+			the Entity-Relationship diagram (ERD) below. There is also a
+			<A
+HREF="http://mantisbt.org/docs/erd/"
+TARGET="_top"
+>				PDF version available for download</A
+>.
+		</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="ERD"
+></A
+><A
+HREF="images/erd.png"
+TARGET="_top"
+>				<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="images/erd.png"
+WIDTH="100%"></SPAN
+>
+			</A
+><P
+><B
+>Figure 1. MantisBT Entity-Relationship Diagram</B
+></P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
 CLASS="SECT1"
 ><A
 NAME="DEV.DATABASE.SCHEMA"
@@ -2335,7 +2759,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_EXAMPLE (Default)</B
 ></P
 ><A
-NAME="AEN358"
+NAME="AEN434"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2395,7 +2819,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_PLUGIN_INIT (Execute)</B
 ></P
 ><A
-NAME="AEN375"
+NAME="AEN451"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2446,7 +2870,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_CORE_READY (Execute)</B
 ></P
 ><A
-NAME="AEN388"
+NAME="AEN464"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2472,7 +2896,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LOG (Execute)</B
 ></P
 ><A
-NAME="AEN393"
+NAME="AEN469"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2517,7 +2941,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_DISPLAY_BUG_ID (Chained)</B
 ></P
 ><A
-NAME="AEN402"
+NAME="AEN478"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2569,7 +2993,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_DISPLAY_EMAIL (Chained)</B
 ></P
 ><A
-NAME="AEN417"
+NAME="AEN493"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2615,7 +3039,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_DISPLAY_FORMATTED (Chained)</B
 ></P
 ><A
-NAME="AEN429"
+NAME="AEN505"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2661,7 +3085,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_DISPLAY_RSS (Chained)</B
 ></P
 ><A
-NAME="AEN441"
+NAME="AEN517"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2710,7 +3134,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_DISPLAY_TEXT (Chained)</B
 ></P
 ><A
-NAME="AEN455"
+NAME="AEN531"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2773,7 +3197,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_ACCOUNT (Default)</B
 ></P
 ><A
-NAME="AEN472"
+NAME="AEN548"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2805,7 +3229,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_DOCS (Default)</B
 ></P
 ><A
-NAME="AEN480"
+NAME="AEN556"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2837,7 +3261,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_FILTER (Default)</B
 ></P
 ><A
-NAME="AEN488"
+NAME="AEN564"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2869,7 +3293,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_ISSUE (Default)</B
 ></P
 ><A
-NAME="AEN496"
+NAME="AEN572"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2901,7 +3325,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_MAIN (Default)</B
 ></P
 ><A
-NAME="AEN504"
+NAME="AEN580"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2936,7 +3360,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_MAIN_FRONT (Default)</B
 ></P
 ><A
-NAME="AEN512"
+NAME="AEN588"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -2971,7 +3395,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_MANAGE (Default)</B
 ></P
 ><A
-NAME="AEN520"
+NAME="AEN596"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3005,7 +3429,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_MANAGE_CONFIG (Default)</B
 ></P
 ><A
-NAME="AEN528"
+NAME="AEN604"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3039,7 +3463,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MENU_SUMMARY (Default)</B
 ></P
 ><A
-NAME="AEN536"
+NAME="AEN612"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3085,7 +3509,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_RESOURCES (Output)</B
 ></P
 ><A
-NAME="AEN547"
+NAME="AEN623"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3122,7 +3546,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_BODY_BEGIN (Output)</B
 ></P
 ><A
-NAME="AEN556"
+NAME="AEN632"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3158,7 +3582,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_PAGE_HEADER (Output)</B
 ></P
 ><A
-NAME="AEN565"
+NAME="AEN641"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3190,7 +3614,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_CONTENT_BEGIN (Output)</B
 ></P
 ><A
-NAME="AEN573"
+NAME="AEN649"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3222,7 +3646,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_CONTENT_END (Output)</B
 ></P
 ><A
-NAME="AEN581"
+NAME="AEN657"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3255,7 +3679,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_PAGE_FOOTER (Output)</B
 ></P
 ><A
-NAME="AEN589"
+NAME="AEN665"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3288,7 +3712,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_LAYOUT_BODY_END (Output)</B
 ></P
 ><A
-NAME="AEN597"
+NAME="AEN673"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3342,7 +3766,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_FILTER_FIELDS (Default)</B
 ></P
 ><A
-NAME="AEN610"
+NAME="AEN686"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3380,7 +3804,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_FILTER_COLUMNS (Default)</B
 ></P
 ><A
-NAME="AEN619"
+NAME="AEN695"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3436,7 +3860,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_VIEW_BUG_DETAILS (Execute)</B
 ></P
 ><A
-NAME="AEN632"
+NAME="AEN708"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3477,7 +3901,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_VIEW_BUG_EXTRA (Execute)</B
 ></P
 ><A
-NAME="AEN642"
+NAME="AEN718"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3526,7 +3950,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_REPORT_BUG_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN654"
+NAME="AEN730"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3563,7 +3987,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_REPORT_BUG_FORM_TOP (Execute)</B
 ></P
 ><A
-NAME="AEN663"
+NAME="AEN739"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3600,7 +4024,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_REPORT_BUG_DATA (Chain)</B
 ></P
 ><A
-NAME="AEN672"
+NAME="AEN748"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3649,7 +4073,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_REPORT_BUG (Execute)</B
 ></P
 ><A
-NAME="AEN685"
+NAME="AEN761"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3690,7 +4114,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_UPDATE_BUG_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN696"
+NAME="AEN772"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3723,7 +4147,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_UPDATE_BUG_FORM_TOP (Execute)</B
 ></P
 ><A
-NAME="AEN704"
+NAME="AEN780"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3756,7 +4180,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_UPDATE_BUG (Chain)</B
 ></P
 ><A
-NAME="AEN712"
+NAME="AEN788"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3808,7 +4232,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_UPDATE_BUG_STATUS_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN727"
+NAME="AEN803"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3845,7 +4269,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUG_ACTION (Execute)</B
 ></P
 ><A
-NAME="AEN736"
+NAME="AEN812"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3885,7 +4309,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUG_DELETED (Execute)</B
 ></P
 ><A
-NAME="AEN747"
+NAME="AEN823"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3927,7 +4351,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_VIEW_BUGNOTES_START (Execute)</B
 ></P
 ><A
-NAME="AEN757"
+NAME="AEN833"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -3968,7 +4392,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_VIEW_BUGNOTE (Execute)</B
 ></P
 ><A
-NAME="AEN768"
+NAME="AEN844"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4013,7 +4437,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_VIEW_BUGNOTES_END (Execute)</B
 ></P
 ><A
-NAME="AEN781"
+NAME="AEN857"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4058,7 +4482,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUGNOTE_ADD_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN792"
+NAME="AEN868"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4095,7 +4519,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUGNOTE_ADD (Execute)</B
 ></P
 ><A
-NAME="AEN801"
+NAME="AEN877"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4131,7 +4555,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUGNOTE_EDIT_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN811"
+NAME="AEN887"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4172,7 +4596,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUGNOTE_EDIT (Execute)</B
 ></P
 ><A
-NAME="AEN822"
+NAME="AEN898"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4207,7 +4631,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_BUGNOTE_DELETED (Execute)</B
 ></P
 ><A
-NAME="AEN832"
+NAME="AEN908"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4242,7 +4666,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_TAG_ATTACHED (Execute)</B
 ></P
 ><A
-NAME="AEN842"
+NAME="AEN918"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4277,7 +4701,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_TAG_DETACHED (Execute)</B
 ></P
 ><A
-NAME="AEN852"
+NAME="AEN928"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4330,7 +4754,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_NOTIFY_USER_INCLUDE (Default)</B
 ></P
 ><A
-NAME="AEN866"
+NAME="AEN942"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4380,7 +4804,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_NOTIFY_USER_EXCLUDE (Default)</B
 ></P
 ><A
-NAME="AEN880"
+NAME="AEN956"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4452,7 +4876,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_ACCOUNT_PREFS_UPDATE_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN900"
+NAME="AEN976"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4489,7 +4913,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_ACCOUNT_PREFS_UPDATE (Execute)</B
 ></P
 ><A
-NAME="AEN909"
+NAME="AEN985"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4532,7 +4956,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_OVERVIEW_INFO (Output)</B
 ></P
 ><A
-NAME="AEN919"
+NAME="AEN995"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4564,7 +4988,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_PROJECT_PAGE (Execute)</B
 ></P
 ><A
-NAME="AEN926"
+NAME="AEN1002"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4600,7 +5024,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_PROJECT_CREATE_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN935"
+NAME="AEN1011"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4625,7 +5049,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_PROJECT_CREATE (Execute)</B
 ></P
 ><A
-NAME="AEN940"
+NAME="AEN1016"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4657,7 +5081,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_PROJECT_UPDATE_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN948"
+NAME="AEN1024"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4694,7 +5118,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_PROJECT_UPDATE (Execute)</B
 ></P
 ><A
-NAME="AEN957"
+NAME="AEN1033"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4726,7 +5150,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_VERSION_CREATE (Execute)</B
 ></P
 ><A
-NAME="AEN965"
+NAME="AEN1041"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4759,7 +5183,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_VERSION_UPDATE_FORM (Execute)</B
 ></P
 ><A
-NAME="AEN973"
+NAME="AEN1049"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"
@@ -4796,7 +5220,7 @@ CLASS="BLOCKQUOTE"
 >EVENT_MANAGE_VERSION_UPDATE (Execute)</B
 ></P
 ><A
-NAME="AEN982"
+NAME="AEN1058"
 ></A
 ><BLOCKQUOTE
 CLASS="BLOCKQUOTE"

@@ -28,7 +28,7 @@
 	 *
 	 * @package MantisBT
 	 * @copyright Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
-	 * @copyright Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+	 * @copyright Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
 	 * @link http://www.mantisbt.org
 	 */
 
@@ -69,9 +69,18 @@
 	$g_db_schema			= '';
 
 	/**
-	 * Defines the database type. The supported default is 'mysql'.
-	 * Supported types: 'mysql' or 'mysqli' for MySQL, 'pgsql' for PostgreSQL,
-	 * 'odbc_mssql', 'mssql' for MS SQL Server, 'oci8' for Oracle, and 'db2' for DB2.
+	 * Defines the database type. Supported types are listed below;
+	 * the corresponding PHP extension must be enabled.
+	 *
+	 * RDBMS           db_type       PHP ext   Comments
+	 * -----           -------       -------   --------
+	 * MySQL           mysql         mysql     default
+	 *                 mysqli        mysqli
+	 * PostgreSQL      pgsql         pgsql
+	 * MS SQL Server   mssqlnative   sqlsrv    experimental
+	 * Oracle          oci8          oci8      experimental
+	 * DB2             db2           ibm-db2   experimental
+	 *
 	 * @global string $g_db_type
 	 */
 	$g_db_type				= 'mysql';
@@ -317,19 +326,19 @@
 	 * Administrator Email address
 	 * @global string $g_administrator_email
 	 */
-	$g_administrator_email	= 'support@goconcierge.net';
+	$g_administrator_email	= 'administrator@example.com';
 
 	/**
 	 * Webmaster email
 	 * @global string $g_webmaster_email
 	 */
-	$g_webmaster_email		= 'support@goconcierge.net';
+	$g_webmaster_email		= 'webmaster@example.com';
 
 	/**
 	 * the sender email, part of 'From: ' header in emails
 	 * @global string $g_from_email
 	 */
- 	$g_from_email			= 'noreply@goconcierge.net';
+ 	$g_from_email			= 'noreply@example.com';
 
 	/**
 	 * the sender name, part of 'From: ' header in emails
@@ -341,7 +350,7 @@
 	 * the return address for bounced mail
 	 * @global string $g_return_path_email
 	 */
-	$g_return_path_email	= 'support@goconcierge.net';
+	$g_return_path_email	= 'admin@example.com';
 
 	/**
 	 * Allow email notification.
@@ -572,7 +581,7 @@
 	 * Set to off by default to not expose version to users
 	 * @global int $g_show_version
 	 */
-	$g_show_version			= ON;
+	$g_show_version			= OFF;
 
 	/**
 	 * String appended to the MantisBT version when displayed to the user
@@ -3959,4 +3968,7 @@
 	 * - 'http://MyOwnMantisTouch.com/'
 	 * - ''
 	 */
-	$g_mantistouch_url = '';
+	$g_mantistouch_url = file_exists( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . "m" ) ? $g_path . 'm/' : '';
+
+	# Temporary variables should not remain defined in global scope
+	unset( $t_protocol, $t_host, $t_hosts, $t_port, $t_self, $t_path, $t_use_iis );

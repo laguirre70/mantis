@@ -2,7 +2,7 @@
 /** MantisBT - a php based bugtracking system
  *
  * Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ * Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
  *
  * MantisBT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
  */
-/** Czech (česky)
+/** Czech (čeština)
  * 
  * See the qqq 'language' for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -27,6 +27,7 @@
  *
  * @author Adam Zivner
  * @author Chmee2
+ * @author Cvanca
  * @author Jezevec
  * @author Jirí Kuchta, kuchta@feec.vutbr.cz
  * @author Kuvaly
@@ -284,8 +285,8 @@ $MANTIS_ERROR[ERROR_PLUGIN_GENERIC] = 'Při běhu pluginu "%2$s" se vyskytla nez
 $MANTIS_ERROR[ERROR_COLUMNS_DUPLICATE] = 'Pole \'%1$s\' obsahuje duplicitní sloupec \'%2$s\'.';
 $MANTIS_ERROR[ERROR_COLUMNS_INVALID] = 'Pole \'%1$s\' obsahuje neplatné pole \'%2$s\'';
 $MANTIS_ERROR[ERROR_SESSION_HANDLER_INVALID] = 'Neplatný řadič sezení.';
-$MANTIS_ERROR[ERROR_SESSION_VAR_NOT_FOUND] = 'Proměnná sezení "%1$s" nebyla nalezena.';
-$MANTIS_ERROR[ERROR_SESSION_NOT_VALID] = 'Sezení je neplatné.';
+$MANTIS_ERROR[ERROR_SESSION_VAR_NOT_FOUND] = 'Proměnná spojení "%1$s" nebyla nalezena.';
+$MANTIS_ERROR[ERROR_SESSION_NOT_VALID] = 'Spojení je neplatné.';
 $MANTIS_ERROR[ERROR_FORM_TOKEN_INVALID] = 'Neplatný zabezpečující token formuláře. Buď byl nechtě formulář odeslán dvakrát nebo došlo k vypršení časového limitu relace.';
 $MANTIS_ERROR[ERROR_INVALID_REQUEST_METHOD] = 'Tato stránka není touto metodou přístupná.';
 $MANTIS_ERROR[ERROR_INVALID_SORT_FIELD] = 'Neplatné řadicí pole.';
@@ -494,7 +495,9 @@ $s_from = 'Od:';
 $s_to = 'Komu:';
 $s_sent_you_this_reminder_about = 'vám poslal toto upozornění na';
 $s_bug_reminder = 'Odeslat upozornění';
-$s_reminder_sent_to = 'Upomínka zaslána na adresu:';
+$s_reminder_sent_to = 'Upomínka zaslána na';
+$s_reminder_sent_none = 'Nemohou být odeslány žádné upomínky';
+$s_reminder_list_truncated = 'seznam příjemců byl vyčištěn';
 $s_bug_send_button = 'Odeslat';
 $s_reminder = 'Upozornění';
 $s_reminder_explain = 'Toto upozornění je odesláno příjemci, který byl uveden jako žadatel o odezvu ohledně tohoto problému.';
@@ -607,6 +610,7 @@ $s_protected = 'Ochrana';
 $s_create_user_button = 'Vytvořit';
 $s_hide_disabled = 'Skrýt nepovolené';
 $s_filter_button = 'Použít filtr';
+$s_default_filter = 'Standardní filtr';
 $s_create_filter_link = 'Vytvořit trvalý odkaz';
 $s_create_short_link = 'Vythořit krátký odkaz';
 $s_filter_permalink = 'Trvalý odkaz na nyní konfigurovaný filtr:';
@@ -1141,6 +1145,7 @@ $s_handle_sponsored_issue = 'Řešit sponzorovaný problém';
 $s_others = 'OSTATNÍ';
 $s_see_email_addresses_of_other_users = 'Zobrazit emailové adresy ostatních uživatelů';
 $s_send_reminders = 'Odeslat připomenutí';
+$s_receive_reminders = 'Přijímat upomínky';
 $s_add_profiles = 'Přidat profily';
 $s_notify_of_new_user_created = 'Upozorni na nově vytvořené uživatele';
 $s_email_notification = 'Upozorňování e-mailem';

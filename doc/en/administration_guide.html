@@ -31,7 +31,7 @@ NAME="INDEX"
 ></H1
 ><P
 CLASS="COPYRIGHT"
->Copyright &copy; 2013 The MantisBT Team</P
+>Copyright &copy; 2014 The MantisBT Team</P
 ><DIV
 CLASS="LEGALNOTICE"
 ><P
@@ -518,6 +518,15 @@ HREF="#ADMIN.CONFIG.TIMETRACKING"
 HREF="#ADMIN.CONFIG.SOAP"
 >SOAP API</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#ADMIN.CONFIG.SOAP.DISABLE"
+>Disabling the SOAP API</A
+></DT
+></DL
+></DD
 ><DT
 ><A
 HREF="#ADMIN.CONFIG.MANTISTOUCH"
@@ -1550,10 +1559,10 @@ CLASS="EMPHASIS"
 >mandatory</I
 >:
 								the extension for the RDBMS being used (
-									mysqli,
+									mysql/mysqli,
 									pgsql,
 									oci8,
-									mssql/sqlsrv,
+									sqlsrv,
 									ibm-db2
 								)
 							</P
@@ -1694,7 +1703,7 @@ VALIGN="MIDDLE"
 ><TD
 >5.0.x or above</TD
 ><TD
->PHP extension: mysqli</TD
+>PHP extension: mysql/mysqli</TD
 ></TR
 ><TR
 ><TD
@@ -3680,11 +3689,104 @@ CLASS="VARIABLELIST"
 >$g_db_type</DT
 ><DD
 ><P
->The supported database types include: 'mysql' or 'mysqli' for MySQL,
-		    'pgsql' for PostgreSQL, 'mssql' for MS SQL Server, 'oci8' for Oracle,
-		    and 'db2' for DB2.  It is important to make sure that the PHP extension
-		    corresponding to the database type is enabled.
-                    </P
+>The supported database types are listed in the table
+						below.
+					</P
+><P
+>The PHP extension corresponding to the selected type
+						must be enabled.
+					</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN766"
+></A
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><THEAD
+><TR
+><TH
+>RDBMS</TH
+><TH
+>db_type</TH
+><TH
+>PHP extension</TH
+><TH
+>Comments</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+ROWSPAN="2"
+VALIGN="MIDDLE"
+>MySQL</TD
+><TD
+>mysql</TD
+><TD
+>mysql</TD
+><TD
+>default</TD
+></TR
+><TR
+><TD
+>mysqli</TD
+><TD
+>mysqli</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>PostgreSQL</TD
+><TD
+>pgsql</TD
+><TD
+>pgsql</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>IBM DB2</TD
+><TD
+>db2</TD
+><TD
+>db2</TD
+><TD
+>experimental</TD
+></TR
+><TR
+><TD
+>MS SQL Server</TD
+><TD
+>mssqlnative</TD
+><TD
+>sqlsrv</TD
+><TD
+>experimental</TD
+></TR
+><TR
+><TD
+>Oracle</TD
+><TD
+>oci8</TD
+><TD
+>oci8</TD
+><TD
+>experimental</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
 ></DD
 ></DL
 ></DIV
@@ -4914,8 +5016,6 @@ TARGET="_top"
 >.
 						Note that this function's behavior was modified in PHP 5.4.0.
 					</P
-><P
->					</P
 ></DD
 ></DL
 ></DIV
@@ -5564,7 +5664,7 @@ NAME="ADMIN.CONFIG.HTML"
 CLASS="VARIABLELIST"
 ><DL
 ><DT
->$g_html_tags</DT
+>$g_html_valid_tags</DT
 ><DD
 ><P
 >This is the list of HTML tags that are allowed.Do NOT
@@ -7437,13 +7537,13 @@ CLASS="VARIABLELIST"
 >LOG_AJAX</DT
 ><DD
 ><P
-></P
+>logs AJAX events</P
 ></DD
 ><DT
 >LOG_DATABASE</DT
 ><DD
 ><P
-></P
+>logs database events and executed queries</P
 ></DD
 ><DT
 >LOG_EMAIL</DT
@@ -7466,7 +7566,7 @@ CLASS="VARIABLELIST"
 >LOG_FILTERING</DT
 ><DD
 ><P
-></P
+>logs filter operations</P
 ></DD
 ><DT
 >LOG_LDAP</DT
@@ -7579,7 +7679,17 @@ NAME="ADMIN.CONFIG.SOAP"
 >SOAP API</A
 ></H2
 ><P
->These options are used to control the behaviour of the MantisBT SOAP API and are usually configured in <CODE
+>MantisBT exposes a SOAP API which allows remote clients to interact with MantisBT and perform many of the usual tasks, such as reporting issues, running filtered searches and retrieving attachments. The SOAP API is enabled by default and available at <CODE
+CLASS="LITERAL"
+>/api/soap/mantisconnect.php</CODE
+> below your installation root.</P
+><P
+>A WSDL file which describes the web service is available at <CODE
+CLASS="LITERAL"
+>/api/soap/mantisconnect.php?wsdl</CODE
+> below your installation root.</P
+><P
+>The following options are used to control the behaviour of the MantisBT SOAP API and are usually configured in <CODE
 CLASS="LITERAL"
 >api/soap/mc_config_inc.php</CODE
 >.</P
@@ -7594,7 +7704,46 @@ CLASS="VARIABLELIST"
 ><P
 >			Flag controlling the library to use for SOAP communication. When the native PHP extension is available this flag default to OFF, which means that nusoap will not used. The native extension has the advantage of being faster, more memory efficient and maintained to work with recent versions on PHP. When the extension is not available MantisBT falls back to using nusoap.</P
 ></DD
+><DT
+>$g_mc_readonly_access_level_threshold</DT
+><DD
+><P
+>Minimum global access level required to access webservice for readonly operations.</P
+></DD
+><DT
+>$g_mc_readwrite_access_level_threshold</DT
+><DD
+><P
+>Minimum global access level required to access webservice for read/write operations.</P
+></DD
+><DT
+>$g_mc_admin_access_level_threshold</DT
+><DD
+><P
+>Minimum global access level required to access the administrator webservices.</P
+></DD
 ></DL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="ADMIN.CONFIG.SOAP.DISABLE"
+>Disabling the SOAP API</A
+></H3
+><P
+>If you wish to temporarily disable the SOAP API it is sufficient to set the specific access thresholds to NOBODY in <CODE
+CLASS="LITERAL"
+>api/soap/mc_config_inc.php</CODE
+>:</P
+><P
+><CODE
+CLASS="LITERAL"
+>$g_mc_readonly_access_level_threshold = $g_mc_readwrite_access_level_threshold = $g_mc_admin_access_level_threshold = NOBODY;</CODE
+></P
+><P
+>While the SOAP API will still be accessible, it will not allow users to retrieve or modify data.</P
 ></DIV
 ></DIV
 ><DIV
@@ -8181,7 +8330,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2335"
+NAME="AEN2396"
 ></A
 ><TABLE
 BORDER="1"
@@ -8302,7 +8451,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2379"
+NAME="AEN2440"
 ></A
 ><TABLE
 BORDER="1"
@@ -8478,7 +8627,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2428"
+NAME="AEN2489"
 ></A
 ><TABLE
 BORDER="1"
@@ -8722,7 +8871,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2538"
+NAME="AEN2599"
 ></A
 ><TABLE
 BORDER="1"
@@ -8798,7 +8947,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2568"
+NAME="AEN2629"
 ></A
 ><TABLE
 BORDER="1"
@@ -8866,7 +9015,7 @@ NAME="ADMIN.PAGES.MANAGE.CONFIG.TRANSITIONS"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2590"
+NAME="AEN2651"
 ></A
 ><P
 ><B
@@ -10585,7 +10734,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN2973"
+NAME="AEN3034"
 ></A
 ><TABLE
 BORDER="1"
@@ -10803,12 +10952,12 @@ function custom_function_override_issue_update_validate( $p_issue_id, $p_bug_dat
 	if( $p_bug_data-&#62;status == RESOLVED ) {
 		if ( $p_bug_data-&#62;resolution == OPEN ) {
 			error_parameters( 'the resolution cannot be open to resolve the issue' );
-			trigger_error( ERROR_BUG_VALIDATE_FAILURE, ERROR );
+			trigger_error( ERROR_VALIDATE_FAILURE, ERROR );
 		}
-		$t_version_count = count( version_get_all_rows( $p_bug_data-&#38;gt;project_id ) );
+		$t_version_count = count( version_get_all_rows( $p_bug_data-&#62;project_id ) );
 		if( ( $t_version_count &#62; 0 ) &#38;&#38; ( $p_bug_data-&#62;fixed_in_version == '' ) ) {
 			error_parameters( 'fixed in version must be set to resolve the issue' );
-			trigger_error( ERROR_BUG_VALIDATE_FAILURE, ERROR );
+			trigger_error( ERROR_VALIDATE_FAILURE, ERROR );
 		}
 	}
 }

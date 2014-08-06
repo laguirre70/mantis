@@ -1,11 +1,11 @@
 Mantis Bug Tracker Developers Guide
 
-   Copyright © 2013 The MantisBT Team
+   Copyright © 2014 The MantisBT Team
 
    A reference guide and documentation of the Mantis Bug Tracker
    for developers and community members.
 
-   Build Date: 12 April 2013
+   Build Date: 3 March 2014
 
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
    CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
@@ -27,6 +27,12 @@ Mantis Bug Tracker Developers Guide
 
         1.1. Initial Setup
         1.2. Cloning the Repository
+
+              1.2.1. Determining the Clone URL
+              1.2.2. Initializing the Clone
+              1.2.3. Adding remotes
+              1.2.4. Checking out branches
+
         1.3. Maintaining Tracking Branches
         1.4. Preparing Feature Branches
 
@@ -44,8 +50,9 @@ Mantis Bug Tracker Developers Guide
 
    2. Database Schema Management
 
-        2.1. Schema Definition
-        2.2. Installation / Upgrade Process
+        2.1. The MantisBT schema
+        2.2. Schema Definition
+        2.3. Installation / Upgrade Process
 
    3. Event System
 
@@ -121,6 +128,9 @@ Mantis Bug Tracker Developers Guide
    7. Appendix
 
         7.1. Git References
+
+   List of Figures
+   2-1. MantisBT Entity-Relationship Diagram
      __________________________________________________________
 
 Chapter 1. Contributing to MantisBT
@@ -161,53 +171,153 @@ $ git config --global alias.ci "commit"
 
 1.2. Cloning the Repository
 
-   The primary repository for MantisBT is hosted and available in
-   multiple methods depending on user status and intentions. For
-   most contributers, the public clone URL is
-   git://github.com/mantisbt/mantisbt.git. To clone the
-   repository, perform the following from your target workspace:
-$ git clone git://github.com/mantisbt/mantisbt.git
+   The official MantisBT source code repository is hosted at
+   GitHub. This document assumes that you have already signed up
+   for and setup a GitHub account.
+     __________________________________________________________
 
-   If you are a member of the MantisBT development team with write
-   access to the repository, there is a special clone URL that
-   uses your SSH key to handle access permissions and allow you
-   read and write access. Note: This action will fail if you do
-   not have developer access or do not have your public SSH key
-   set up correctly.
-$ git clone git@github.com:mantisbt/mantisbt.git
+1.2.1. Determining the Clone URL
+
+   Which URL you will use to clone the repository before you start
+   developing depends on your situation.
+
+   MantisBT Core Team Developers
+          MantisBT developers have push access to the official
+          repository.
+
+          Benefitting from this access requires a special URL that
+          uses your SSH key to handle access permissions:
+          git@github.com:mantisbt/mantisbt.git. Alternatively, an
+          HTTPS link can be used as well, in which case you will
+          have to provide your GitHub User ID and password when
+          Git requests it:
+          https://github.com/mantisbt/mantisbt.git.
+
+     Note
+
+          Pushes will fail if you do not have push access or your public
+          SSH key is not set up correctly in your GitHub profile.
+
+   Contributors
+          For other people, the MantisBT repository and the
+          related clone URLs
+          git://github.com/mantisbt/mantisbt.git (SSH) or
+          https://github.com/mantisbt/mantisbt.git (HTTPS) will
+          always be read-only.
+
+          It is therefore strongly advised to create your own fork
+          of MantisBT where you will be able to push your changes,
+          and then use the fork's URL instead to clone, which will
+          look like this: git@github.com:YourGitHubID/mantisbt.git
+          or https://github.com/YourGitHubID/mantisbt.git
+     __________________________________________________________
+
+1.2.2. Initializing the Clone
+
+   To clone the repository, execute the following command from
+   your target workspace:
+git clone YourCloneURL
 
    After performing the cloning operation, you should end up with
-   a new directory in your workspace, mantisbt/. By default, it
-   will only track code from the primary remote branch, master,
-   which is the latest development version of MantisBT. For
-   contributers planning to work with stable release branches, or
+   a new directory in your workspace, mantisbt/, containing the
+   MantisBT repository with a remote named origin pointing to your
+   Clone URL.
+
+   MantisBT uses Git submodules to store and manage some
+   third-party libraries. These require additional steps to
+   initialize properly:
+cd mantisbt
+git submodule update --init
+
+   Warning
+
+           Failure to execute the submodule initialization commands will
+           result in the corresponding directories under /library being
+           empty, which will then cause errors when running MantisBT.
+     __________________________________________________________
+
+1.2.3. Adding remotes
+
+   If you are planning to use your own fork to push and maintain
+   your changes, then we recommend setting up an upstream remote
+   for MantisBT's official repository, which will make it easier
+   to keep your repository up-to-date.
+git remote add --tags upstream git://github.com/mantisbt/mantisbt.git
+     __________________________________________________________
+
+1.2.4. Checking out branches
+
+   By default, the new clone will only track code from the primary
+   remote branch, master, which is the latest development version
+   of MantisBT. If you are planning to work with stable release or
    other development branches, you will need to set up local
-   tracking branches in your repository. The following commands
-   will set up a tracking branch for the current stable branch,
-   master-1.2.x.
-$ git checkout -b master-1.2.x origin/master-1.2.x
+   tracking branches in your repository.
+
+   The following command will set up a tracking branch for the
+   current stable branch, master-1.2.x.
+git checkout -b master-1.2.x origin/master-1.2.x
+
+   Note
+
+   With the introduction of submodules for some of the third-party
+   libraries, you may encounter issues when switching to an older
+   branch which still has code from those libraries in a
+   subdirectory of /library rather than a submodule:
+
+$ git checkout old_branch
+error: The following untracked working tree files would be overwritten b
+y checkout
+        (list of files)
+Aborting
+
+   To resolve this, you first have to get rid of the submodules
+   directories before you can checkout the branch. The command
+   below will move all submodules to /tmp:
+sed -rn "s/^.*path\s*=\s*(.*)$/\1/p" .gitmodules |xargs -I{} mv -v {} /t
+mp
+git checkout old_branch
+
+   When switching back from the older branch, the submodules
+   directories will be empty. At that point you can either
+
+     * Update the submodules to reclone them
+git submodule update
+     * Restore the directories previously moved to /tmp back into
+       the empty directories, e.g.
+sed -rn "s/^.*path\s*=\s*(.*)$/\1/p" .gitmodules |xargs -n 1 basename |x
+args -I{} mv -v /tmp/{} library
+
+   For further reference: Pro Git book
      __________________________________________________________
 
 1.3. Maintaining Tracking Branches
 
-   In order to keep your local repository up to date with the
-   official, there are a few simple commands needed for any
+   In order to keep your local repository up-to-date with the
+   official one, there are a few simple commands needed for any
    tracking branches that you may have, including master and
    master-1.2.x.
 
-   First, you'll need to got the latest information from the
+   First, you'll need to get the latest information from the
    remote repo:
-$ git fetch origin
+git fetch origin
+
+   Note
+
+           If you cloned from your personal GitHub fork instead of the
+           official MantisBT repository as explained in Section 1.2.3>,
+           then you should instead execute:
+        git fetch upstream
 
    Then for each tracking branch you have, enter the following
    commands:
-$ git checkout master
-$ git rebase origin/master
+git checkout BranchName
+git rebase
 
-   Alternatively, you may combine the above steps into a single
-   command for each remote tracking branch:
-$ git checkout master
-$ git pull --rebase
+   Alternatively, you may combine the fetch and rebase operations
+   described above into a single pull command (for each remote
+   tracking branch):
+git checkout master
+git pull --rebase
      __________________________________________________________
 
 1.4. Preparing Feature Branches
@@ -404,13 +514,23 @@ $ git am --signoff feature_branch.patch
 
 Chapter 2. Database Schema Management
 
-2.1. Schema Definition
+2.1. The MantisBT schema
+
+   The MantisBT database schema (excluding plugins) is described
+   in the Entity-Relationship diagram (ERD) below. There is also a
+   PDF version available for download.
+
+   Figure 2-1. MantisBT Entity-Relationship Diagram
+   [erd.png]
+     __________________________________________________________
+
+2.2. Schema Definition
 
    TODO: Discuss the ADODB datadict formats and the format
    MantisBT expects for schema deinitions.
      __________________________________________________________
 
-2.2. Installation / Upgrade Process
+2.3. Installation / Upgrade Process
 
    TODO: Discuss how MantisBT handles a database installation /
    upgrade, including the use of the config system and schema

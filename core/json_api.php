@@ -19,7 +19,7 @@
  * @package CoreAPI
  * @subpackage JSONAPI
  * @copyright Copyright (C) 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * @copyright Copyright (C) 2002 - 2013  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ * @copyright Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
  * @link http://www.mantisbt.org
  */
 
@@ -33,8 +33,8 @@ require_once( 'lang_api.php' );
 /**
  * Get a chunk of JSON from a given URL.
  * @param string URL
- * @param string Top-level member to retrieve
- * @return multi JSON class structure
+ * @param string Optional top-level member to retrieve
+ * @return multi JSON class structure, false in case of non-existent member
  */
 function json_url( $p_url, $p_member = null ) {
 	$t_data = url_get( $p_url );
@@ -42,8 +42,10 @@ function json_url( $p_url, $p_member = null ) {
 
 	if( is_null( $p_member ) ) {
 		return $t_json;
-	} else {
+	} else if( property_exists( $t_json, $p_member ) ) {
 		return $t_json->$p_member;
+	} else {
+		return false;
 	}
 }
 
